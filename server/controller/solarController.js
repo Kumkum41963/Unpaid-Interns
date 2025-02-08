@@ -8,7 +8,7 @@ const calculateSolarPotential = async (req, res) => {
         const { state, country, rooftop_area, panel_type } = req.body
 
         // Check that we have all the inputs
-        if (!state || !country || !rooftop_area || !panel_type || !panelTypes[panel_type]) {
+        if (!state || !country || !rooftop_area || !panel_type ) {
             return res.status(400).json({ error: "All fields are required." });
         }
 
