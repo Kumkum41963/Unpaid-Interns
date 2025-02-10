@@ -3,10 +3,12 @@ dotenv.config();
 const express = require("express");
 const cors = require("cors");
 
+const connectDb = require('./config/connectDB')
+
 // utility routes
 const analyzeRoutes = require("./routes/analyze");
 const solarRoutes = require("./routes/solarRoutes");
-const electricityRoutes =require('./controller/electricityController')
+const electricityRoutes = require('./controller/electricityController');
 
 const app = express();
 
@@ -27,5 +29,16 @@ app.use("/api", electricityRoutes);
 //     res.json({ message: 'Request was successful!' });
 // });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Connect to db first then the server starts
+const startServer = async () => {
+  try {
+    await connectDb();
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
