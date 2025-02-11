@@ -11,6 +11,12 @@ const vendorSchema = new mongoose.Schema({
     country: String,
     zip: String,
   },
+  location: { 
+    type: { type: String, enum: ["Point"], default: "Point" }, 
+    coordinates: { type: [Number], index: "2dsphere" }
+  },
 });
+
+vendorSchema.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("Vendor", vendorSchema);
