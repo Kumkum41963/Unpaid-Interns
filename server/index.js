@@ -9,6 +9,8 @@ const connectDb = require('./config/connectDB')
 const analyzeRoutes = require("./routes/analyze");
 const solarRoutes = require("./routes/solarRoutes");
 const electricityRoutes = require('./controller/electricityController');
+const userRoutes = require('./routes/user')
+const vendorRoutes = require('./routes/vendor')
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use(cors(corsOption));
 app.use("/analyze", analyzeRoutes);
 app.use("/api", solarRoutes);
 app.use("/api", electricityRoutes);
+app.use("/user", userRoutes)
+app.use("/vendor", vendorRoutes)
 
 // app.post('/api/submit', (req, res) => {
 //     const { name } = req.body;
@@ -34,7 +38,7 @@ const startServer = async () => {
   try {
     await connectDb();
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT} 🤫🧏`));
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
     process.exit(1);
