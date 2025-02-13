@@ -8,7 +8,7 @@ const connectDb = require('./config/connectDB')
 // utility routes
 const analyzeRoutes = require("./routes/analyze");
 const solarRoutes = require("./routes/solarRoutes");
-const electricityRoutes = require('./controller/electricityController');
+const electricityRoutes = require('./routes/electricityRoutes');
 const userRoutes = require('./routes/user')
 const vendorRoutes = require('./routes/vendor')
 

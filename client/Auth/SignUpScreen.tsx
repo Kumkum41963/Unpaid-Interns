@@ -22,17 +22,17 @@ const SignUp: React.FC = () => {
       const response = await fetch("http://localhost:3000/user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name: form.name, 
-          email: form.email, 
-          password: form.password, 
-          address: { 
-            street: form.street, 
-            city: form.city, 
-            state: form.state, 
-            country: form.country, 
-            zip: form.zip 
-          } 
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          address: {
+            street: form.street,
+            city: form.city,
+            state: form.state,
+            country: form.country,
+            zip: form.zip
+          }
         }),
       });
       const data = await response.json();

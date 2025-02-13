@@ -1,25 +1,35 @@
 const mongoose = require("mongoose");
 
-const addressSchema = new mongoose.Schema({
-  street: { type: String, required: true },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  country: { type: String, required: true },
-  zip: { type: String, required: true }
+// Solar History Schema
+const solarHistorySchema = new mongoose.Schema({
+  state: String,
+  country: String,
+  rooftop_area: Number,
+  panel_type: String,
+  daily_solar_output_kWh: Number,
+  monthly_solar_output_kWh: Number,
+  date: { type: Date, default: Date.now }
 });
 
+// Electricity History Schema
+const electricityHistorySchema = new mongoose.Schema({
+  kWh: Number,
+  method: { type: String, enum: ["bill", "appliance"] },
+  date: { type: Date, default: Date.now }
+});
+
+// User Schema
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  address: { type: addressSchema, required: true },
-  location: { 
-    type: { type: String, enum: ["Point"], default: "Point" }, 
-    coordinates: { type: [Number], index: "2dsphere" }
-  },
-  green_points: { type: Number, default: 0 }
-});
+  avatar: { type: String, default: "" },
+  bio: { type: String, default: "" },
+  green_points: { type: Number, default: 0 },
 
-userSchema.index({ location: "2dsphere" });
+  // History Storage
+  solarHistory: [solarHistorySchema],
+  electricityHistory: [electricityHistorySchema]
+});
 
 module.exports = mongoose.model("User", userSchema);

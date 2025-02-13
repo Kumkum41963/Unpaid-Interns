@@ -1,5 +1,6 @@
 const express = require("express");
-const { calculateElectricityUsage } = require("../controllers/electricityController");
+const {calculateElectricityUsage}=require('../controller/electricityController')
+
 
 const router = express.Router();
 

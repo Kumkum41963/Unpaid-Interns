@@ -1,26 +1,17 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
-import { BottomTabParamList } from "./types";
+import { TouchableOpacity, StyleSheet } from "react-native";
 
 // Import Screens
 import HomeScreen from "../screens/HomeScreen";
-import SolarScreen from "../screens/Calculators/SolarCalculatorScreen";
-import ElectricityScreen from "../screens/Calculators/ElectricityCalculatorScreen";
 import MarketPlaceScreen from "../screens/MarketPlaceScreen";
 
-// Import Floating Button
-import FloatingButton from "../components/ui/FloatingButton";
+// Import Stack Navigators
+import SolarStackNavigator from "./SolarStackNavigator";
+import ElectricityStackNavigator from "./ElectricityStackNavigator";
 
-const Tab = createBottomTabNavigator<BottomTabParamList>();
-const Stack = createStackNavigator();
-
-const createStack = (screen: React.ComponentType, name: string) => () => (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={name} component={screen} />
-    </Stack.Navigator>
-);
+const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({ navigation }: any) => {
     return (
@@ -33,7 +24,7 @@ const BottomTabNavigator = ({ navigation }: any) => {
         >
             <Tab.Screen
                 name="Home"
-                component={createStack(HomeScreen, "Home")}
+                component={HomeScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Ionicons name="home" size={24} color={focused ? "#0B5D1E" : "#999"} />
@@ -43,7 +34,7 @@ const BottomTabNavigator = ({ navigation }: any) => {
 
             <Tab.Screen
                 name="Solar"
-                component={createStack(SolarScreen, "Solar")}
+                component={SolarStackNavigator} // ✅ Use Stack for Solar navigation
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Ionicons name="sunny" size={24} color={focused ? "#0B5D1E" : "#999"} />
@@ -51,20 +42,25 @@ const BottomTabNavigator = ({ navigation }: any) => {
                 }}
             />
 
-            {/* Floating Button (Opens WasteAnalyzeScreen) */}
+            {/* Floating Button (No Floating Button Component) */}
             <Tab.Screen
                 name="Plus"
                 component={() => null}
                 options={{
                     tabBarButton: () => (
-                        <FloatingButton onPress={() => navigation.navigate("WasteAnalyzeScreen")} />
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("WasteAnalyzeScreen")}
+                            style={styles.floatingButton}
+                        >
+                            <Ionicons name="add" size={30} color="#fff" />
+                        </TouchableOpacity>
                     ),
                 }}
             />
 
             <Tab.Screen
                 name="Electricity"
-                component={createStack(ElectricityScreen, "Electricity")}
+                component={ElectricityStackNavigator} // ✅ Use Stack for Electricity navigation
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Ionicons name="flash" size={24} color={focused ? "#0B5D1E" : "#999"} />
@@ -74,7 +70,7 @@ const BottomTabNavigator = ({ navigation }: any) => {
 
             <Tab.Screen
                 name="MarketPlace"
-                component={createStack(MarketPlaceScreen, "MarketPlace")}
+                component={MarketPlaceScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Ionicons name="cart" size={24} color={focused ? "#0B5D1E" : "#999"} />
@@ -85,8 +81,19 @@ const BottomTabNavigator = ({ navigation }: any) => {
     );
 };
 
+const styles = StyleSheet.create({
+    floatingButton: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: "#007BFF",
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
+
 export default BottomTabNavigator;
-
-
-
 
