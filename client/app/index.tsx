@@ -7,12 +7,16 @@ import { Text } from "react-native";
 // Native has this by default , so doing again will create nesting -> Error
 // import { NavigationContainer } from "@react-navigation/native"; 
 import MainStackNavigator from "@/navigation/MainStackNavigator";  // ✅ Import main navigation
+import MapScreen from "@/screens/MapScreen";
+import ImageUploadScreen from "@/screens/WasteAnalyzeScreen";
+
 
 export default function App() {
     return (
         // <NavigationContainer> 
-            <MainStackNavigator />
-            // <Text>Hello from app</Text> 
+            // <MainStackNavigator />
+            // <Text>Hello from app</Text>
+            <ImageUploadScreen />
         // </NavigationContainer>
     );
 }

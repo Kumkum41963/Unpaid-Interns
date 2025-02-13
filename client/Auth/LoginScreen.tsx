@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
@@ -25,11 +26,13 @@ const Login: React.FC = () => {
       }
   
       const data = await response.json();
-      Alert.alert("Success", data.message || "Logged in successfully");
-    } catch (error:any) {
+      await AsyncStorage.setItem("token", data.token);
+      await AsyncStorage.setItem("userEmail", form.email);
+      Alert.alert("Success", "Logged in successfully");
+    } catch (error: any) {
       Alert.alert("Error", error.message || "Failed to log in");
     }
-  };
+  };  
   
 
   return (

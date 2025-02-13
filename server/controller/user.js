@@ -54,4 +54,23 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getUserByEmail };
+const deductGreenPoints = async (req, res) => {
+  try {
+    const { email, price } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (user.green_points < price)
+      return res.status(400).json({ message: "Insufficient Green Points" });
+
+    user.green_points -= price;
+    await user.save();
+
+    res.json({ message: "Purchase successful", green_points: user.green_points });
+  } catch (error) {
+    res.status(500).json({ message: "Error processing purchase" });
+  }
+};
+
+module.exports = { registerUser, loginUser, getUserByEmail, deductGreenPoints };
