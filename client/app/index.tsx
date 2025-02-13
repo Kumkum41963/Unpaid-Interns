@@ -9,6 +9,8 @@ import { Text } from "react-native";
 import MainStackNavigator from "@/navigation/MainStackNavigator";  // ✅ Import main navigation
 import MapScreen from "@/screens/MapScreen";
 import ImageUploadScreen from "@/screens/WasteAnalyzeScreen";
+import VendorSignUp from "@/components/ui/VendorSignUp";
+import VendorLogin from "@/components/ui/VendorLogin";
 
 
 export default function App() {
@@ -16,7 +18,7 @@ export default function App() {
         // <NavigationContainer> 
             // <MainStackNavigator />
             // <Text>Hello from app</Text>
-            <ImageUploadScreen />
+            <MapScreen />
         // </NavigationContainer>
     );
 }
