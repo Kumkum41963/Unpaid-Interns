@@ -3,42 +3,41 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
 type LoginState = {
-  email: string;
+  phone: string;
   password: string;
 };
 
-const Login: React.FC = () => {
-  const [form, setForm] = useState<LoginState>({ email: "", password: "" });
+const VendorLogin: React.FC = () => {
+  const [form, setForm] = useState<LoginState>({ phone: "", password: "" });
 
   const handleChange = (key: keyof LoginState, value: string) => setForm({ ...form, [key]: value });
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch("http://localhost:3000/vendor/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
-  
+
       const data = await response.json();
       await AsyncStorage.setItem("token", data.token);
-      await AsyncStorage.setItem("userEmail", form.email);
+      await AsyncStorage.setItem("vendorPhone", form.phone);
       Alert.alert("Success", "Logged in successfully");
     } catch (error: any) {
       Alert.alert("Error", error.message || "Failed to log in");
     }
-  };  
-  
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input} placeholder="Email" value={form.email} onChangeText={(text) => handleChange("email", text)} keyboardType="email-address" />
+      <Text style={styles.title}>Vendor Login</Text>
+      <TextInput style={styles.input} placeholder="Phone" value={form.phone} onChangeText={(text) => handleChange("phone", text)} keyboardType="phone-pad" />
       <TextInput style={styles.input} placeholder="Password" value={form.password} onChangeText={(text) => handleChange("password", text)} secureTextEntry />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
@@ -55,4 +54,4 @@ const styles = StyleSheet.create({
   buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
 });
 
-export default Login;
+export default VendorLogin;
