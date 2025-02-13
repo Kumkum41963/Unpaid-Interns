@@ -6,12 +6,12 @@ import { BottomTabParamList } from "./types";
 
 // Import Screens
 import HomeScreen from "../screens/HomeScreen";
-import SolarScreen from "../screens/SolarScreen";
-import ElectricityScreen from "../screens/ElectricityScreen";
+import SolarScreen from "../screens/Calculators/SolarCalculatorScreen";
+import ElectricityScreen from "../screens/Calculators/ElectricityCalculatorScreen";
 import MarketPlaceScreen from "../screens/MarketPlaceScreen";
 
 // Import Floating Button
-import FloatingButton from "../components/buttons/FloatingButton";
+import FloatingButton from "../components/ui/FloatingButton";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator();
