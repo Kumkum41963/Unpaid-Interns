@@ -10,7 +10,7 @@ type LoginState = {
 const Login: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ email: "", password: "" });
 
-  const handleChange = (key: keyof LoginState, value: string) => setForm({ ...form, [key]: value });
+  const handleChange = (key: keyof LoginState, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async () => {
     try {
@@ -19,12 +19,12 @@ const Login: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
-  
+
       const data = await response.json();
       await AsyncStorage.setItem("token", data.token);
       await AsyncStorage.setItem("userEmail", form.email);
@@ -32,8 +32,8 @@ const Login: React.FC = () => {
     } catch (error: any) {
       Alert.alert("Error", error.message || "Failed to log in");
     }
-  };  
-  
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -56,6 +56,9 @@ const Login: React.FC = () => {
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      <Text style={styles.signupText}>
+        Don't have an account? <Text style={styles.signupLink}>Sign up</Text>
+      </Text>
     </View>
   );
 };
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    color: "#E0E0E0", // Light text for input
+    color: "#E0E0E0", // White text for input
     backgroundColor: "#1A1A1A", // Dark input background
   },
   button: {
@@ -92,6 +95,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  signupText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: "#E0E0E0", // Light gray text
+    textAlign: "center",
+  },
+  signupLink: {
+    color: "#4CAF50", // Green for the signup link
     fontWeight: "bold",
   },
 });

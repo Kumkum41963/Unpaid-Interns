@@ -10,7 +10,9 @@ type LoginState = {
 const VendorLogin: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ phone: "", password: "" });
 
-  const handleChange = (key: keyof LoginState, value: string) => setForm({ ...form, [key]: value });
+  const handleChange = (key: keyof LoginState, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSubmit = async () => {
     try {
@@ -37,22 +39,19 @@ const VendorLogin: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vendor Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Phone"
-        value={form.phone}
-        onChangeText={(text) => handleChange("phone", text)}
-        keyboardType="phone-pad"
-        placeholderTextColor="#bbb"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={form.password}
-        onChangeText={(text) => handleChange("password", text)}
-        secureTextEntry
-        placeholderTextColor="#bbb"
-      />
+      {/* Render form inputs dynamically */}
+      {Object.entries(form).map(([key, value]) => (
+        <TextInput
+          key={key}
+          style={styles.input}
+          placeholder={key.charAt(0).toUpperCase() + key.slice(1)} // Dynamic placeholder
+          value={value}
+          onChangeText={(text) => handleChange(key as keyof LoginState, text)}
+          secureTextEntry={key === "password"} // Secure text entry for password
+          keyboardType={key === "phone" ? "phone-pad" : "default"} // Specific keyboard type for phone
+          placeholderTextColor="#bbb" // Light gray placeholder text
+        />
+      ))}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>

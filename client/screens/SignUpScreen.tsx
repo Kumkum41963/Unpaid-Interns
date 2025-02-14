@@ -13,32 +13,42 @@ type FormState = {
 };
 
 const SignUp: React.FC = () => {
-  const [form, setForm] = useState<FormState>({ name: "", email: "", password: "", street: "", city: "", state: "", country: "", zip: "" });
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    password: "",
+    street: "",
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
+  });
 
-  const handleChange = (key: keyof FormState, value: string) => setForm({ ...form, [key]: value });
+  const handleChange = (key: keyof FormState, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("exp://192.168.0.104:8081", {
+      const response = await fetch("http://localhost:3000/vendor/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          password: form.password,
+          ...form,
           address: {
             street: form.street,
             city: form.city,
             state: form.state,
             country: form.country,
-            zip: form.zip
-          }
+            zip: form.zip,
+          },
         }),
       });
+
       const data = await response.json();
       Alert.alert("Success", data.message || "Registered successfully");
     } catch (error) {
-      console.log("error at register", error);
+      console.log("Error at register:", error);
       Alert.alert("Error", "Failed to register");
     }
   };
@@ -46,20 +56,22 @@ const SignUp: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
-      {Object.keys(form).map((key) => (
-        <TextInput 
-          key={key} 
-          style={styles.input} 
-          placeholder={key.charAt(0).toUpperCase() + key.slice(1)} 
-          value={form[key as keyof FormState]} 
-          onChangeText={(text) => handleChange(key as keyof FormState, text)} 
-          secureTextEntry={key === "password"} 
-          placeholderTextColor="#A0A0A0" // Light gray placeholder
+      {Object.entries(form).map(([key, value]) => (
+        <TextInput
+          key={key}
+          style={styles.input}
+          placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+          value={value}
+          onChangeText={(text) => handleChange(key as keyof FormState, text)}
+          secureTextEntry={key === "password"}
         />
       ))}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <Text style={styles.loginText}>
+        Already have an account? <Text style={styles.loginLink}>Log in</Text>
+      </Text>
     </View>
   );
 };
@@ -96,6 +108,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  loginText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: "#E0E0E0", // Light gray text
+    textAlign: "center",
+  },
+  loginLink: {
+    color: "#4CAF50", // Green for the signup link
     fontWeight: "bold",
   },
 });
