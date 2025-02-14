@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const getCoordinates = require("../utils/getCoordinates");
 
 const registerUser = async (req, res) => {
+  console.log(req.body)
   try {
     const { name, email, password, address } = req.body;
     if (!name || !email || !password || !address) {
