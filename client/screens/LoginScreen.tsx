@@ -10,7 +10,7 @@ type LoginState = {
 const Login: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ email: "", password: "" });
 
-  const handleChange = (key: keyof LoginState, value: string) => setForm({ ...form, [key]: value });
+  const handleChange = (key: keyof LoginState, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async () => {
     try {
@@ -19,12 +19,12 @@ const Login: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
-  
+
       const data = await response.json();
       await AsyncStorage.setItem("token", data.token);
       await AsyncStorage.setItem("userEmail", form.email);
@@ -32,8 +32,7 @@ const Login: React.FC = () => {
     } catch (error: any) {
       Alert.alert("Error", error.message || "Failed to log in");
     }
-  };  
-  
+  };
 
   return (
     <View style={styles.container}>
@@ -43,6 +42,9 @@ const Login: React.FC = () => {
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      <Text style={styles.signupText}>
+        Don't have an account? <Text style={styles.signupLink}>Sign up</Text>
+      </Text>
     </View>
   );
 };
@@ -51,8 +53,10 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "blue", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
+  button: { backgroundColor: "#1B5E20", padding: 15, borderRadius: 5, alignItems: "center" },
+  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" },
+  signupText: { marginTop: 15, fontSize: 14, color: "#333", textAlign: "center" },
+  signupLink: { color: "#1B5E20", fontWeight: "bold" },
 });
 
 export default Login;

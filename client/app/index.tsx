@@ -11,6 +11,8 @@ import MapScreen from "@/screens/MapScreen";
 import ImageUploadScreen from "@/screens/WasteAnalyzeScreen";
 import VendorSignUp from "@/components/ui/VendorSignUp";
 import VendorLogin from "@/components/ui/VendorLogin";
+import SignUp from "@/screens/SignUpScreen";
+import Login from "@/screens/LoginScreen";
 
 
 export default function App() {
@@ -18,7 +20,7 @@ export default function App() {
         // <NavigationContainer> 
             // <MainStackNavigator />
             // <Text>Hello from app</Text>
-            <MapScreen />
+            <ImageUploadScreen />
         // </NavigationContainer>
     );
 }

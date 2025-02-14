@@ -10,7 +10,9 @@ type LoginState = {
 const VendorLogin: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ phone: "", password: "" });
 
-  const handleChange = (key: keyof LoginState, value: string) => setForm({ ...form, [key]: value });
+  const handleChange = (key: keyof LoginState, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSubmit = async () => {
     try {
@@ -37,8 +39,17 @@ const VendorLogin: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vendor Login</Text>
-      <TextInput style={styles.input} placeholder="Phone" value={form.phone} onChangeText={(text) => handleChange("phone", text)} keyboardType="phone-pad" />
-      <TextInput style={styles.input} placeholder="Password" value={form.password} onChangeText={(text) => handleChange("password", text)} secureTextEntry />
+      {Object.entries(form).map(([key, value]) => (
+        <TextInput
+          key={key}
+          style={styles.input}
+          placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+          value={value}
+          onChangeText={(text) => handleChange(key as keyof LoginState, text)}
+          secureTextEntry={key === "password"}
+          keyboardType={key === "phone" ? "phone-pad" : "default"}
+        />
+      ))}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -47,11 +58,11 @@ const VendorLogin: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "blue", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
+  input: { width: "100%", borderWidth: 1, borderColor: "#ccc", padding: 15, marginBottom: 15, borderRadius: 8 },
+  button: { backgroundColor: "#1B5E20", paddingVertical: 14, borderRadius: 8, alignItems: "center", width: "100%" },
+  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" },
 });
 
 export default VendorLogin;

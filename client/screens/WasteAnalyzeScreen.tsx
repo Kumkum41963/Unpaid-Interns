@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Image, Text, StyleSheet } from "react-native";
+import { View, Button, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import axios from "axios";
 
@@ -39,48 +39,111 @@ const ImageUploadScreen: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <Button title="Pick an Image" onPress={pickImage} />
+        <ScrollView contentContainerStyle={styles.container}>
+            <Text style={styles.title}>Upload & Analyze Image</Text>
+            <TouchableOpacity style={styles.button} onPress={pickImage}>
+                <Text style={styles.buttonText}>Select an Image</Text>
+            </TouchableOpacity>
+
             {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-            {imageUri && <Button title="Upload Image" onPress={uploadImage} />}
+
+            {imageUri && (
+                <TouchableOpacity style={styles.button} onPress={uploadImage}>
+                    <Text style={styles.buttonText}>Upload Image</Text>
+                </TouchableOpacity>
+            )}
+
             {responseData && (
-                <View style={styles.responseContainer}>
-                    <Text style={styles.title}>Product Name: {responseData.productName}</Text>
-                    <Text style={styles.subtitle}>Material Type: {responseData.wasteInfo.materialType}</Text>
-                    <Text style={styles.subtitle}>Disposal Options: {responseData.wasteInfo.disposalOptions}</Text>
-                    <Text style={styles.subtitle}>Proper Disposal: {responseData.wasteInfo.properDisposal}</Text>
-                    <Text style={styles.subtitle}>Recycling Instructions: {responseData.wasteInfo.recyclingInstructions}</Text>
-                    <Button title="Sell" onPress={() => console.log("Sell button pressed")} />
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Analysis Result</Text>
+                    <Text style={styles.infoText}><Text style={styles.boldText}>Product Name:</Text> {responseData.productName}</Text>
+                    <Text style={styles.infoText}><Text style={styles.boldText}>Material Type:</Text> {responseData.wasteInfo.materialType}</Text>
+                    <Text style={styles.infoText}><Text style={styles.boldText}>Disposal Options:</Text> {responseData.wasteInfo.disposalOptions}</Text>
+                    <Text style={styles.infoText}><Text style={styles.boldText}>Proper Disposal:</Text> {responseData.wasteInfo.properDisposal}</Text>
+                    <Text style={styles.infoText}><Text style={styles.boldText}>Recycling Instructions:</Text> {responseData.wasteInfo.recyclingInstructions}</Text>
+
+                    <TouchableOpacity style={styles.sellButton} onPress={() => console.log("Sell button pressed")}>
+                        <Text style={styles.sellButtonText}>Sell</Text>
+                    </TouchableOpacity>
                 </View>
             )}
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
-    },
-    image: {
-        width: 200,
-        height: 200,
-        marginVertical: 20,
-    },
-    responseContainer: {
-        marginTop: 20,
-        width: "100%",
+        backgroundColor: "#F5F5F5",
     },
     title: {
+        fontSize: 22,
+        fontWeight: "bold",
+        color: "#1B5E20",
+        marginBottom: 20,
+    },
+    button: {
+        backgroundColor: "#1B5E20",
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: "center",
+        width: "90%",
+        marginBottom: 15,
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    image: {
+        width: 250,
+        height: 250,
+        marginVertical: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#CCC",
+    },
+    card: {
+        backgroundColor: "white",
+        width: "90%",
+        padding: 15,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 5,
+        marginTop: 20,
+    },
+    cardTitle: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "#1B5E20",
         marginBottom: 10,
+        textAlign: "center",
     },
-    subtitle: {
+    infoText: {
         fontSize: 16,
         marginBottom: 5,
+    },
+    boldText: {
+        fontWeight: "bold",
+    },
+    sellButton: {
+        backgroundColor: "#388E3C",
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: 15,
+    },
+    sellButtonText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold",
     },
 });
 

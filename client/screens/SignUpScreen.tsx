@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "reac
 
 type FormState = {
   name: string;
-  phone: string;
+  email: string;
   password: string;
   street: string;
   city: string;
@@ -12,10 +12,10 @@ type FormState = {
   zip: string;
 };
 
-const VendorSignUp: React.FC = () => {
+const SignUp: React.FC = () => {
   const [form, setForm] = useState<FormState>({
     name: "",
-    phone: "",
+    email: "",
     password: "",
     street: "",
     city: "",
@@ -30,7 +30,7 @@ const VendorSignUp: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/vendor/register", {
+      const response = await fetch("http://localhost:3000/user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ const VendorSignUp: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Vendor Sign Up</Text>
+      <Text style={styles.title}>Sign Up</Text>
       {Object.entries(form).map(([key, value]) => (
         <TextInput
           key={key}
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
   loginLink: { color: "#1B5E20", fontWeight: "bold" },
 });
 
-export default VendorSignUp;
+export default SignUp;
