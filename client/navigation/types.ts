@@ -1,31 +1,32 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 
-// ✅ Define valid routes for Root Stack Navigator
+// ✅ Root Stack Navigator (Main Navigation)
 export type RootStackParamList = {
-    Home: undefined;
-    ProfileScreen: undefined; // ✅ Ensure ProfileScreen is included
+    MainTabs: NavigatorScreenParams<BottomTabParamList>; 
+    ProfileScreen: undefined;
     Login: undefined;
     SignUp: undefined;
     About: undefined;
+    ImageUploadScreen: undefined; // ✅ Added for floating button navigation
 };
 
-// ✅ Define valid routes for Bottom Tab Navigator
+// ✅ Bottom Tab Navigator (Tab Navigation)
 export type BottomTabParamList = {
     Home: undefined;
-    Solar: NavigatorScreenParams<SolarStackParamList>; // Solar Stack
-    Electricity: NavigatorScreenParams<ElectricityStackParamList>; // Electricity Stack
+    Solar: NavigatorScreenParams<SolarStackParamList>; 
+    Electricity: NavigatorScreenParams<ElectricityStackParamList>; 
     MarketPlace: undefined;
-    Plus: undefined; // Floating Button (No screen assigned)
+    Plus: undefined; // ✅ Floating Button (No screen assigned)
 };
 
-// ✅ Define Solar Stack Routes
+// ✅ Solar Stack Routes
 export type SolarStackParamList = {
     SolarCalculator: undefined;
-    SolarResult: { result: string }; // Expected params for Solar Result
+    SolarResult: { result: string };
 };
 
-// ✅ Define Electricity Stack Routes
+// ✅ Electricity Stack Routes
 export type ElectricityStackParamList = {
     ElectricityCalculator: undefined;
-    ElectricityResult: { result: string }; // Expected params for Electricity Result
+    ElectricityResult: { result: string };
 };

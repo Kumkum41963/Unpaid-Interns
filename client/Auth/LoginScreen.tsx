@@ -34,12 +34,25 @@ const Login: React.FC = () => {
     }
   };  
   
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input} placeholder="Email" value={form.email} onChangeText={(text) => handleChange("email", text)} keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Password" value={form.password} onChangeText={(text) => handleChange("password", text)} secureTextEntry />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={form.email}
+        onChangeText={(text) => handleChange("email", text)}
+        keyboardType="email-address"
+        placeholderTextColor="#A0A0A0" // Light gray placeholder
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={form.password}
+        onChangeText={(text) => handleChange("password", text)}
+        secureTextEntry
+        placeholderTextColor="#A0A0A0" // Light gray placeholder
+      />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -48,11 +61,39 @@ const Login: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "blue", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#121212", // Dark background
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#E0E0E0", // Light text for contrast
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#4CAF50", // Sustainable green border
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    color: "#E0E0E0", // Light text for input
+    backgroundColor: "#1A1A1A", // Dark input background
+  },
+  button: {
+    backgroundColor: "#4CAF50", // Green for sustainability
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default Login;

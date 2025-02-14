@@ -46,7 +46,12 @@ const Marketplace: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      {/* Heading */}
+      <Text style={styles.heading}>Eco Marketplace</Text>
+      <Text style={styles.description}>Use your Green Points to shop for sustainable products.</Text>
+
       <Text style={styles.points}>Green Points: {greenPoints}</Text>
+
       <FlatList
         data={staticProducts}
         keyExtractor={(item) => item.id}
@@ -57,8 +62,32 @@ const Marketplace: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  points: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 40, // Ensures content starts at the top
+    backgroundColor: "#121212", // Dark theme
+  },
+  heading: {
+    fontSize: 30, // Bigger heading for emphasis
+    fontWeight: "bold",
+    color: "#a0e080", // Green for eco-friendly look
+    textAlign: "center",
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 16,
+    color: "#bbbbbb",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  points: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ffffff",
+    textAlign: "center",
+    marginBottom: 10,
+  },
 });
 
 export default Marketplace;

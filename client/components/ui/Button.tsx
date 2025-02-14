@@ -20,16 +20,16 @@ export default function Button({ title, onPress, disabled = false }: ButtonProps
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "#0B5D1E",
+        backgroundColor: "#388e3c", // Green for active button
         padding: 12,
         borderRadius: 8,
         alignItems: "center",
     },
     disabledButton: {
-        backgroundColor: "#999", // ✅ Make disabled button gray
+        backgroundColor: "#666", // Gray for disabled button
     },
     text: {
-        color: "#fff",
+        color: "#ffffff", // White text for better contrast
         fontSize: 16,
         fontWeight: "bold",
     },

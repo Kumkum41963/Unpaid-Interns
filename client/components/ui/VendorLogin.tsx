@@ -37,8 +37,22 @@ const VendorLogin: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vendor Login</Text>
-      <TextInput style={styles.input} placeholder="Phone" value={form.phone} onChangeText={(text) => handleChange("phone", text)} keyboardType="phone-pad" />
-      <TextInput style={styles.input} placeholder="Password" value={form.password} onChangeText={(text) => handleChange("password", text)} secureTextEntry />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone"
+        value={form.phone}
+        onChangeText={(text) => handleChange("phone", text)}
+        keyboardType="phone-pad"
+        placeholderTextColor="#bbb"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={form.password}
+        onChangeText={(text) => handleChange("password", text)}
+        secureTextEntry
+        placeholderTextColor="#bbb"
+      />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -47,11 +61,39 @@ const VendorLogin: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "blue", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    backgroundColor: "#121212", // Dark mode background
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#a0e080", // Green for eco-friendly touch
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#2e7d32", // Green border for input fields
+    padding: 12,
+    marginBottom: 15,
+    borderRadius: 5,
+    color: "#ffffff", // White text in inputs
+    backgroundColor: "#1e1e1e", // Dark background for inputs
+  },
+  button: {
+    backgroundColor: "#388e3c", // Green for login button
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default VendorLogin;

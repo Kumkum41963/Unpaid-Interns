@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Image, Text, StyleSheet } from "react-native";
+import { View, Button, Image, Text, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import axios from "axios";
 
@@ -17,32 +17,38 @@ const ImageUploadScreen: React.FC = () => {
 
     const uploadImage = async () => {
         if (!imageUri) {
-            console.error("No image selected");
+            Alert.alert("Error", "No image selected");
             return;
         }
 
-        const blob = await fetch(imageUri).then((response) => response.blob());
-
-        const formData = new FormData();
-        formData.append("image", blob, "upload.jpg");
-
         try {
+            const blob = await fetch(imageUri).then((response) => response.blob());
+
+            const formData = new FormData();
+            formData.append("image", blob, "upload.jpg");
+
             const res = await axios.post("http://localhost:3000/analyze/suggestion", formData, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                 },
             });
+
             setResponseData(res.data);
         } catch (error: any) {
-            console.error("Error uploading image:", error.response?.data || error.message);
+            Alert.alert("Error", error.response?.data || error.message);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Button title="Pick an Image" onPress={pickImage} />
+            {/* Heading */}
+            <Text style={styles.heading}>Waste Analyzer</Text>
+            <Text style={styles.description}>Upload an image to get disposal and recycling suggestions.</Text>
+
+            <Button title="Pick an Image" onPress={pickImage} color="#388e3c" />
             {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-            {imageUri && <Button title="Upload Image" onPress={uploadImage} />}
+            {imageUri && <Button title="Upload Image" onPress={uploadImage} color="#a0e080" />}
+
             {responseData && (
                 <View style={styles.responseContainer}>
                     <Text style={styles.title}>Product Name: {responseData.productName}</Text>
@@ -50,7 +56,7 @@ const ImageUploadScreen: React.FC = () => {
                     <Text style={styles.subtitle}>Disposal Options: {responseData.wasteInfo.disposalOptions}</Text>
                     <Text style={styles.subtitle}>Proper Disposal: {responseData.wasteInfo.properDisposal}</Text>
                     <Text style={styles.subtitle}>Recycling Instructions: {responseData.wasteInfo.recyclingInstructions}</Text>
-                    <Button title="Sell" onPress={() => console.log("Sell button pressed")} />
+                    <Button title="Sell" onPress={() => console.log("Sell button pressed")} color="#FF5733" />
                 </View>
             )}
         </View>
@@ -60,26 +66,46 @@ const ImageUploadScreen: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingHorizontal: 20,
+        paddingTop: 40, // Pushes content to the top
+        backgroundColor: "#121212", // Dark mode theme
         alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
+    },
+    heading: {
+        fontSize: 30, // Bigger heading for emphasis
+        fontWeight: "bold",
+        color: "#a0e080", // Green for eco-friendly look
+        textAlign: "center",
+        marginBottom: 8,
+    },
+    description: {
+        fontSize: 16,
+        color: "#bbbbbb",
+        textAlign: "center",
+        marginBottom: 20,
     },
     image: {
         width: 200,
         height: 200,
         marginVertical: 20,
+        borderRadius: 10,
     },
     responseContainer: {
         marginTop: 20,
         width: "100%",
+        backgroundColor: "#1e1e1e",
+        padding: 15,
+        borderRadius: 8,
     },
     title: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "#ffffff",
         marginBottom: 10,
     },
     subtitle: {
         fontSize: 16,
+        color: "#bbbbbb",
         marginBottom: 5,
     },
 });

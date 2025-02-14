@@ -46,7 +46,15 @@ const VendorSignUp: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Vendor Sign Up</Text>
       {Object.keys(form).map((key) => (
-        <TextInput key={key} style={styles.input} placeholder={key.charAt(0).toUpperCase() + key.slice(1)} value={form[key as keyof FormState]} onChangeText={(text) => handleChange(key as keyof FormState, text)} secureTextEntry={key === "password"} />
+        <TextInput 
+          key={key}
+          style={styles.input} 
+          placeholder={key.charAt(0).toUpperCase() + key.slice(1)} 
+          value={form[key as keyof FormState]} 
+          onChangeText={(text) => handleChange(key as keyof FormState, text)} 
+          secureTextEntry={key === "password"} 
+          placeholderTextColor="#bbb" // Light text for placeholders
+        />
       ))}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Register</Text>
@@ -56,11 +64,39 @@ const VendorSignUp: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "blue", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" }
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#121212", // Dark background for the page
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#a0e080", // Green for eco-friendly contrast
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#2e7d32", // Green for input borders
+    padding: 12,
+    marginBottom: 15,
+    borderRadius: 5,
+    color: "#ffffff", // White text for inputs
+    backgroundColor: "#1e1e1e", // Dark background for input fields
+  },
+  button: {
+    backgroundColor: "#388e3c", // Green for register button
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default VendorSignUp;
