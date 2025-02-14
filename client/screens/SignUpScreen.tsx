@@ -29,8 +29,8 @@ const SignUp: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/user/register", {
+    try { //https://server-9rhaibbzc-himanshus-projects-75c1b240.vercel.app
+      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -48,6 +48,7 @@ const SignUp: React.FC = () => {
       const data = await response.json();
       Alert.alert("Success", data.message || "Registered successfully");
     } catch (error) {
+      console.log(error)
       Alert.alert("Error", "Failed to register");
     }
   };

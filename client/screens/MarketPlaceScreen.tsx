@@ -24,7 +24,7 @@ const Marketplace: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/deduct", {
+      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/deduct", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,8 +57,18 @@ const Marketplace: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  points: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
+  container: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+    padding: 20,
+  },
+  points: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#1B5E20",
+    textAlign: "center",
+    marginBottom: 15,
+  },
 });
 
 export default Marketplace;

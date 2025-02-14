@@ -1,4 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
@@ -7,14 +9,20 @@ type LoginState = {
   password: string;
 };
 
+type RootStackParamList = {
+  Login: undefined;
+  SignUp: undefined;
+};
+
 const Login: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ email: "", password: "" });
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const handleChange = (key: keyof LoginState, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -43,7 +51,10 @@ const Login: React.FC = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <Text style={styles.signupText}>
-        Don't have an account? <Text style={styles.signupLink}>Sign up</Text>
+        Don't have an account?{" "}
+        <Text style={styles.signupLink} onPress={() => navigation.navigate("SignUp")}>
+          Sign up
+        </Text>
       </Text>
     </View>
   );

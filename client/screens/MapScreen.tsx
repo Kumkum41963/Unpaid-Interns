@@ -28,7 +28,7 @@ const MapScreen: React.FC = () => {
 
   const fetchVendors = async (lat: number, lon: number) => {
     try {
-      const response = await fetch(`http://192.168.29.23:3000/vendor/nearest-vendor?lat=${lat}&lon=${lon}`);
+      const response = await fetch(`https://backend-amber-nine-53.vercel.app/api/vendor/nearest-vendor?lat=${lat}&lon=${lon}`);
       const data = await response.json();
       if (data.error) throw new Error(data.error);
       setVendors([data]);

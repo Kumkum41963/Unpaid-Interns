@@ -27,7 +27,7 @@ const ImageUploadScreen: React.FC = () => {
         formData.append("image", blob, "upload.jpg");
 
         try {
-            const res = await axios.post("http://localhost:3000/analyze/suggestion", formData, {
+            const res = await axios.post("https://backend-amber-nine-53.vercel.app/api/analyze/suggestion", formData, {
                 headers: { 
                     "Content-Type": "multipart/form-data",
                 },
