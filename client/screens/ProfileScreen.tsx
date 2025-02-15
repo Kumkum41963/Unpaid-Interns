@@ -23,7 +23,7 @@ export default function ProfileScreen() {
           navigation.navigate("Login"); // Navigate to login when session expired
           return;
         }
-        const response = await axios.get("http://localhost:3000/api/user/profile", {
+        const response = await axios.get("https://backend-amber-nine-53.vercel.app/api/api/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);
