@@ -16,7 +16,7 @@ const MainStackNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        header: () => <TopNavigationBar />, // Move Top Navigation here
+        header: () => <TopNavigationBar />,
       }}
     >
       <Stack.Screen name="MainTabs" component={BottomTabNavigator} />

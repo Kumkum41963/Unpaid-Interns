@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3000/vendor/register", {
+      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/vendor/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
