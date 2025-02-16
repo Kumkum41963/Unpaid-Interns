@@ -18,7 +18,7 @@ const calculateElectricityUsage = async (req, res) => {
         } else if (method === "bill") {
             const { billAmount, state, unitPrice } = req.body;
             if (!billAmount) {
-                return res.status(400).json({ error: "Please fill the required details." });
+                return res.status(400).json({ error: "Fill the required details." });
             }
             calculatedUsage = getBillBasedElectricityUsage({ billAmount, state, unitPrice });
         } else {
@@ -26,19 +26,20 @@ const calculateElectricityUsage = async (req, res) => {
         }
 
         // ✅ Find user and save the electricity calculation
-        const user = await User.findById(req.user);
-        if (!user) return res.status(404).json({ error: "User not found" });
+        // const user = await User.findById(req.user);
+        // if (!user) return res.status(404).json({ error: "User not found" });
 
-        user.electricityHistory.push({
-            kWh: calculatedUsage,
-            method,
-            date: new Date()
-        });
+        // user.electricityHistory.push({
+        //     kWh: calculatedUsage,
+        //     method,
+        //     date: new Date()
+        // });
 
-        user.green_points += method === "appliance" ? Math.round(calculatedUsage / 20) : 0;
-        await user.save();
+        // user.green_points += method === "appliance" ? Math.round(calculatedUsage / 20) : 0;
+        // await user.save();
 
-        return res.status(200).json({ method, kWh: calculatedUsage, green_points: user.green_points });
+        // return res.status(200).json({ method, kWh: calculatedUsage, green_points: user.green_points });
+        return res.status(200).json({ method, kWh: calculatedUsage });
 
     } catch (error) {
         console.error("❌ Backend Error:", error);

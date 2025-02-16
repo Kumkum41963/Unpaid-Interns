@@ -16,14 +16,14 @@ const getCoordinates = async (address) => {
     });
 
     if (!data || data.length === 0) {
-      console.error("⚠️ No results found for:", query);
+      console.error("No results found for:", query);
       throw new Error("Invalid address - No coordinates found");
     }
 
-    console.log("✅ Coordinates Found:", data[0].lat, data[0].lon);
+    console.log("Coordinates Found:", data[0].lat, data[0].lon);
     return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
   } catch (error) {
-    console.error("❌ Error fetching coordinates:", error.response?.data || error.message);
+    console.error("Error fetching coordinates:", error.response?.data || error.message);
     throw new Error("Failed to fetch coordinates");
   }
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Alert } from "react-native";
 
-const API_URL = "http://exp://192.168.0.104:8081/api/solarPotential"; // ✅ Replace `localhost`
+const API_URL = "https://backend-amber-nine-53.vercel.app/api/api/solarPotential"; // ✅ Replace `localhost`
 
 export const calculateSolarEnergy = async (data: any) => {
     try {
