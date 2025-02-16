@@ -10,7 +10,7 @@ const Product: React.FC<ProductProps> = ({ item, onBuy }) => {
   return (
     <View style={styles.productCard}>
       <Image source={{ uri: item.image }} style={styles.image} />
-      <View style={styles.details}>
+      <View style={styles.productDetails}>
         <Text style={styles.productName}>{item.name}</Text>
         <Text style={styles.price}>{item.price} Green Points</Text>
         <TouchableOpacity style={styles.buyButton} onPress={() => onBuy(item.id, item.price)}>
@@ -23,71 +23,37 @@ const Product: React.FC<ProductProps> = ({ item, onBuy }) => {
 
 const styles = StyleSheet.create({
   productCard: {
-<<<<<<< HEAD
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    marginBottom: 12,
-    overflow: "hidden",
-    elevation: 3,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-  },
-  details: {
-    flex: 1,
-    marginLeft: 15,
-=======
     padding: 15,
-    backgroundColor: "#1e1e1e", // Dark background for card
+    backgroundColor: "#1e1e1e",
     borderRadius: 10,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#2e7d32", // Green border for eco-friendly touch
+    borderColor: "#2e7d32",
   },
   image: {
     width: "100%",
     height: 150,
     borderRadius: 8,
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
+  },
+  productDetails: {
+    padding: 10,
   },
   productName: {
     fontSize: 16,
     fontWeight: "bold",
-<<<<<<< HEAD
-    color: "#333",
-  },
-  price: {
-    fontSize: 14,
-    color: "#1B5E20",
-    marginVertical: 5,
-  },
-  buyButton: {
-    backgroundColor: "#1B5E20",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    alignSelf: "flex-start",
-=======
     marginTop: 10,
-    color: "#ffffff", // White text for readability
+    color: "#ffffff",
   },
   price: {
     fontSize: 14,
-    color: "#a0e080", // Green for eco-friendly contrast
+    color: "#a0e080",
     marginVertical: 8,
   },
   buyButton: {
-    backgroundColor: "#388e3c", // Green background for buy button
+    backgroundColor: "#388e3c",
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
   },
   buyText: {
     color: "white",

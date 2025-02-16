@@ -24,13 +24,7 @@ export default function HomeScreen() {
           setLoading(false);
           return;
         }
-<<<<<<< HEAD
-
-        // Fetch user profile from backend
-        const response = await axios.get("https://backend-amber-nine-53.vercel.app/api/user/profile", {
-=======
         const response = await axios.get("http://localhost:3000/user/profile", {
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);

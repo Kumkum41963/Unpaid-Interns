@@ -64,10 +64,6 @@ const Marketplace: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-    backgroundColor: "#F5F5F5",
-    padding: 20,
-=======
     paddingHorizontal: 20,
     paddingTop: 40, // Ensures content starts at the top
     backgroundColor: "#121212", // Dark theme
@@ -84,20 +80,13 @@ const styles = StyleSheet.create({
     color: "#bbbbbb",
     textAlign: "center",
     marginBottom: 20,
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
   },
   points: {
     fontSize: 20,
     fontWeight: "bold",
-<<<<<<< HEAD
-    color: "#1B5E20",
-    textAlign: "center",
-    marginBottom: 15,
-=======
     color: "#ffffff",
     textAlign: "center",
     marginBottom: 10,
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
   },
 });
 

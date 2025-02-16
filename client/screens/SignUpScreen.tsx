@@ -33,13 +33,8 @@ const SignUp: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-<<<<<<< HEAD
-    try { //https://server-9rhaibbzc-himanshus-projects-75c1b240.vercel.app
-      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/register", {
-=======
     try {
       const response = await fetch("https://backend-amber-nine-53.vercel.app/api/vendor/register", {
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -58,11 +53,7 @@ const SignUp: React.FC = () => {
       Alert.alert("Success", data.message || "Registered successfully");
       navigation.replace("Login"); // Redirect to login after successful signup
     } catch (error) {
-<<<<<<< HEAD
-      console.log(error)
-=======
       console.log("Error at register:", error);
->>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
       Alert.alert("Error", "Failed to register");
     }
   };
