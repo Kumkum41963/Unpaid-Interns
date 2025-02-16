@@ -14,7 +14,8 @@ Individuals and businesses face challenges in efficiently managing their energy 
 ## Solution Proposed
 ### UrjaSetu is an all-in-one platform designed to empower users toward sustainability:
  
-  ![Main Screen](https://drive.google.com/uc?id=16PsP7d3xONOq0BomhzWwNcg50jOBmceL)
+![Main Screen](https://drive.google.com/uc?id=16PsP7d3xONOq0BomhzWwNcg50jOBmceL)
+
 - **Waste Analyzer**: Upload an image, and the platform suggests the best disposal methods or connects with vendors who buy recyclable items.  
   ![Waste Analyzer](https://drive.google.com/uc?id=16NLGBK0ktZvMhJAwyjncGlGeC_ojjyeV)
 - **Energy Consumption Calculator**: Calculate monthly electricity needs, offering insights for optimization and cost savings.  
@@ -24,6 +25,11 @@ Individuals and businesses face challenges in efficiently managing their energy 
 - **Marketplace**: Purchase sustainable products that reduce energy consumption and contribute to a greener future.  
   ![Marketplace](https://drive.google.com/uc?id=16RHZTLld5oE__IYcgP4r6_KzfeeWRX20)
 - **Carbon Footprint Tracker**: Monitor and reduce carbon emissions based on personal energy consumption and lifestyle choices.
+
+---
+
+## User's Workflow  
+![User's Workflow](https://drive.google.com/uc?id=16XsgDW86GVitegNbeijVlxPpGra0wQfB)
 
 ---
 
@@ -44,4 +50,3 @@ Individuals and businesses face challenges in efficiently managing their energy 
 
 ## Unique Selling Proposition (USP)
 UrjaSetu combines essential tools for energy optimization, waste management, and sustainable product purchases. With the Solar Rooftop Calculator, Electricity Calculator, Waste Analyzer, and Carbon Footprint Tracker, users can reduce consumption, save costs, and contribute to a greener, more sustainable future.
-
