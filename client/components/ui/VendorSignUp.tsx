@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
@@ -59,10 +60,12 @@ const VendorSignUp: React.FC = () => {
         <TextInput
           key={key}
           style={styles.input}
-          placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+          placeholder={key.charAt(0).toUpperCase() + key.slice(1)} // Capitalized placeholder
           value={value}
           onChangeText={(text) => handleChange(key as keyof FormState, text)}
-          secureTextEntry={key === "password"}
+          secureTextEntry={key === "password"} // Secure entry for password
+          keyboardType={key === "phone" ? "phone-pad" : "default"} // Phone-specific keyboard type
+          placeholderTextColor="#bbb" // Light placeholder text
         />
       ))}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -76,13 +79,48 @@ const VendorSignUp: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
-  title: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
-  input: { width: "100%", padding: 15, borderWidth: 1, borderRadius: 8, marginBottom: 15 },
-  button: { backgroundColor: "#1B5E20", paddingVertical: 14, borderRadius: 8, alignItems: "center", width: "100%" },
-  buttonText: { color: "#FFF", fontSize: 16, fontWeight: "bold" },
-  loginText: { marginTop: 15, fontSize: 14 },
-  loginLink: { color: "#1B5E20", fontWeight: "bold" },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#121212", // Dark background for the page
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#a0e080", // Green for eco-friendly contrast
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#2e7d32", // Green for input borders
+    padding: 12,
+    marginBottom: 15,
+    borderRadius: 5,
+    color: "#ffffff", // White text in inputs
+    backgroundColor: "#1e1e1e", // Dark background for input fields
+  },
+  button: {
+    backgroundColor: "#388e3c", // Green for register button
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  loginText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: "#fff",
+  },
+  loginLink: {
+    color: "#1B5E20", // Green color for login link
+    fontWeight: "bold",
+  },
 });
 
 export default VendorSignUp;

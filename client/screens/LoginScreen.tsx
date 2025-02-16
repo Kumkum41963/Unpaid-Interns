@@ -3,6 +3,9 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "@/navigation/types";
 
 type LoginState = {
   email: string;
@@ -16,9 +19,14 @@ type RootStackParamList = {
 
 const Login: React.FC = () => {
   const [form, setForm] = useState<LoginState>({ email: "", password: "" });
+<<<<<<< HEAD
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+=======
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Login">>();
+>>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
 
-  const handleChange = (key: keyof LoginState, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
+  const handleChange = (key: keyof LoginState, value: string) =>
+    setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async () => {
     try {
@@ -27,29 +35,60 @@ const Login: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
-
+  
+      console.log("Raw response status:", response.status); 
+  
       const data = await response.json();
-      await AsyncStorage.setItem("token", data.token);
+      console.log("Response Data:", data); 
+  
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed"); 
+      }
+  
+      await AsyncStorage.setItem("authToken", data.token);
       await AsyncStorage.setItem("userEmail", form.email);
+  
       Alert.alert("Success", "Logged in successfully");
+      navigation.replace("ProfileScreen");
     } catch (error: any) {
+      console.error("Login error:", error); 
       Alert.alert("Error", error.message || "Failed to log in");
     }
   };
+  
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input} placeholder="Email" value={form.email} onChangeText={(text) => handleChange("email", text)} keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Password" value={form.password} onChangeText={(text) => handleChange("password", text)} secureTextEntry />
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          value={form.email}
+          onChangeText={(text) => handleChange("email", text)}
+          keyboardType="email-address"
+          placeholderTextColor="#A0A0A0"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          value={form.password}
+          onChangeText={(text) => handleChange("password", text)}
+          secureTextEntry
+          placeholderTextColor="#A0A0A0"
+        />
+      </View>
+
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+
       <Text style={styles.signupText}>
         Don't have an account?{" "}
         <Text style={styles.signupLink} onPress={() => navigation.navigate("SignUp")}>
@@ -61,13 +100,62 @@ const Login: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  button: { backgroundColor: "#1B5E20", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "bold" },
-  signupText: { marginTop: 15, fontSize: 14, color: "#333", textAlign: "center" },
-  signupLink: { color: "#1B5E20", fontWeight: "bold" },
+  container: {
+    flex: 1,
+    justifyContent: "flex-start", 
+    padding: 20,
+    backgroundColor: "#121212",
+    paddingTop: 100, 
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#E0E0E0",
+    marginBottom: 25,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#E0E0E0",
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#75d73c",
+    padding: 12,
+    borderRadius: 8,
+    color: "#E0E0E0",
+    backgroundColor: "#1A1A1A",
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  signupText: {
+    marginTop: 25,
+    fontSize: 18, 
+    color: "#E0E0E0",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  signupLink: {
+    color: "#5dc860",
+    fontWeight: "bold",
+    fontSize: 18, 
+  },
 });
 
 export default Login;

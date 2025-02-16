@@ -27,12 +27,6 @@ app.use("/api/api", electricityRoutes);
 app.use("/api/user", userRoutes)
 app.use("/api/vendor", vendorRoutes)
 
-// app.post('/api/submit', (req, res) => {
-//     const { name } = req.body;
-//     console.log(`Received data: ${name}`);
-//     res.json({ message: 'Request was successful!' });
-// });
-
 // Connect to db first then the server starts
 const startServer = async () => {
   try {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/electricityUsage";
+const API_URL = "https://backend-amber-nine-53.vercel.app/api/api/electricityUsage";
 
 // sends data to API 
 export const calculateElectricity = async (data: any) => {

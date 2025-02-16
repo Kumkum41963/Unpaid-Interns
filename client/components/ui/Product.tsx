@@ -23,6 +23,7 @@ const Product: React.FC<ProductProps> = ({ item, onBuy }) => {
 
 const styles = StyleSheet.create({
   productCard: {
+<<<<<<< HEAD
     backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 12,
@@ -40,10 +41,24 @@ const styles = StyleSheet.create({
   details: {
     flex: 1,
     marginLeft: 15,
+=======
+    padding: 15,
+    backgroundColor: "#1e1e1e", // Dark background for card
+    borderRadius: 10,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#2e7d32", // Green border for eco-friendly touch
+  },
+  image: {
+    width: "100%",
+    height: 150,
+    borderRadius: 8,
+>>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
   },
   productName: {
     fontSize: 16,
     fontWeight: "bold",
+<<<<<<< HEAD
     color: "#333",
   },
   price: {
@@ -58,6 +73,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     alignSelf: "flex-start",
+=======
+    marginTop: 10,
+    color: "#ffffff", // White text for readability
+  },
+  price: {
+    fontSize: 14,
+    color: "#a0e080", // Green for eco-friendly contrast
+    marginVertical: 8,
+  },
+  buyButton: {
+    backgroundColor: "#388e3c", // Green background for buy button
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+>>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
   },
   buyText: {
     color: "white",

@@ -16,7 +16,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+<<<<<<< HEAD
       "usesCleartextTraffic": true,
+=======
+>>>>>>> 365f1f97f2a1b34a36af3372b1eb02f403b29e92
       "package": "com.himanshuuuuuuuuuuu.client"
     },
     "web": {

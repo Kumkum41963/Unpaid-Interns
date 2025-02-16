@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, Alert, StyleSheet, ActivityIndicator, TouchableOpacity, ScrollView } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -36,11 +36,12 @@ export default function SolarCalculatorScreen() {
             });
             setLoading(false);
             navigation.navigate("SolarResult", { result: JSON.stringify(result) });
+
             // ✅ Clear inputs after submission
             setState("");
             setCountry("");
             setRooftopArea("");
-            setPanelType("Monocrystalline"); // Reset dropdown to default value
+            setPanelType("Monocrystalline");
         } catch (error) {
             setLoading(false);
             Alert.alert("Error", "Something went wrong!");
@@ -48,7 +49,14 @@ export default function SolarCalculatorScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {/* Centered Heading & Description */}
+            <Text style={styles.heading}>Solar Rooftop Calculator</Text>
+            <Text style={styles.description}>
+                Estimate your solar energy potential and optimize your energy savings.
+            </Text>
+
+            {/* Input Fields */}
             <Text style={styles.label}>State</Text>
             <TextInput
                 value={state}
@@ -57,6 +65,7 @@ export default function SolarCalculatorScreen() {
                 keyboardType="default"
                 autoCapitalize="words"
                 style={styles.input}
+                placeholderTextColor="#888"
             />
 
             <Text style={styles.label}>Country</Text>
@@ -67,6 +76,7 @@ export default function SolarCalculatorScreen() {
                 keyboardType="default"
                 autoCapitalize="words"
                 style={styles.input}
+                placeholderTextColor="#888"
             />
 
             <Text style={styles.label}>Rooftop Area (sq ft)</Text>
@@ -76,6 +86,7 @@ export default function SolarCalculatorScreen() {
                 placeholder="Enter area"
                 keyboardType="numeric"
                 style={styles.input}
+                placeholderTextColor="#888"
             />
 
             <Text style={styles.label}>Panel Type</Text>
@@ -84,6 +95,7 @@ export default function SolarCalculatorScreen() {
                     selectedValue={panelType}
                     onValueChange={(itemValue) => setPanelType(itemValue)}
                     style={styles.picker}
+                    dropdownIconColor="#a0e080"
                 >
                     <Picker.Item label="Monocrystalline" value="Monocrystalline" />
                     <Picker.Item label="Polycrystalline" value="Polycrystalline" />
@@ -91,48 +103,85 @@ export default function SolarCalculatorScreen() {
                 </Picker>
             </View>
 
-
+            {/* Loading Indicator & Button */}
             {loading ? (
-                <ActivityIndicator size="large" color="#007BFF" />
+                <ActivityIndicator size="large" color="#a0e080" />
             ) : (
-                <Button title="Calculate" onPress={handleCalculate} />
+                <TouchableOpacity style={styles.button} onPress={handleCalculate}>
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </TouchableOpacity>
             )}
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: "#fff",
-        justifyContent: "center",
+    scrollContainer: {
+        flexGrow: 1,
+        paddingHorizontal: 20,
+        paddingTop: 40, // Pushes everything to the top
+        backgroundColor: "#121212", // Dark mode
+    },
+    heading: {
+        fontSize: 32, // Bigger heading for better impact
+        fontWeight: "bold",
+        color: "#a0e080", // Eco-friendly green
+        textAlign: "center",
+        marginBottom: 8,
+    },
+    description: {
+        fontSize: 16,
+        color: "#bbbbbb",
+        textAlign: "center",
+        marginBottom: 25,
     },
     label: {
         fontSize: 16,
         fontWeight: "bold",
+        color: "#a0e080",
         marginBottom: 5,
     },
     input: {
-        height: 40,
+        width: "100%",
+        height: 45,
         borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        borderColor: "#2e7d32",
+        borderRadius: 8,
+        backgroundColor: "#1e1e1e",
+        color: "#ffffff",
+        paddingHorizontal: 12,
         marginBottom: 15,
     },
     pickerContainer: {
+        width: "100%",
         borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 5,
+        borderColor: "#2e7d32",
+        borderRadius: 8,
+        backgroundColor: "#1e1e1e",
         marginBottom: 15,
-        overflow: "hidden",
     },
     picker: {
         height: 50,
         width: "100%",
+        color: "#ffffff",
+    },
+    button: {
+        backgroundColor: "#388e3c",
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: "center",
+        width: "100%",
+        marginTop: 10,
+    },
+    buttonText: {
+        color: "#ffffff",
+        fontSize: 16,
+        fontWeight: "bold",
     },
 });
+
+
+
 
 
 

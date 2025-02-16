@@ -16,16 +16,34 @@ export default function SolarResultScreen() {
 
     return (
         <View style={styles.container}>
-            <ResultCard title="Solar Energy Result" data={[
-                { label: "State", value: data?.state || "N/A" },
-                { label: "Country", value: data?.country || "N/A" },
-                { label: "Panel Type", value: data?.panel_type || "N/A" },
-                { label: "Daily Output", value: `${data?.daily_solar_output_kWh || 0} kWh` },
-                { label: "Monthly Output", value: `${data?.monthly_solar_output_kWh || 0} kWh` }
-            ]} />
-            <Button title="Back to Calculator" onPress={() => navigation.goBack()} />
+            {/* Heading */}
+            <View style={styles.headerContainer}>
+                <ResultCard
+                    title="Solar Energy Result"
+                    data={[
+                        { label: "State", value: data?.state || "N/A" },
+                        { label: "Country", value: data?.country || "N/A" },
+                        { label: "Panel Type", value: data?.panel_type || "N/A" },
+                        { label: "Daily Output", value: `${data?.daily_solar_output_kWh || 0} kWh` },
+                        { label: "Monthly Output", value: `${data?.monthly_solar_output_kWh || 0} kWh` }
+                    ]}
+                />
+            </View>
+
+            {/* Back Button */}
+            <Button title="Back to Calculator" onPress={() => navigation.goBack()} color="#388e3c" />
         </View>
     );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1, padding: 20 } });
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: 20,
+        paddingTop: 40, // Ensures content starts at the top
+        backgroundColor: "#121212", // Dark mode background
+    },
+    headerContainer: {
+        marginBottom: 20,
+    },
+});

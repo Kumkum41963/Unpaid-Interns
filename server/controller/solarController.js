@@ -1,7 +1,7 @@
 const getLocation = require('../utils/solar-rooftop/getLocation')
 const getSolarIrradiance = require('../utils/solar-rooftop/getSolarIrradiance')
 const getPanelEfficiencyCapacity = require('../utils/solar-rooftop/getPanelEfficiencyCapacity')
-const User = require('../models/User')
+// const User = require('../models/User')
 
 const calculateSolarPotential = async (req, res) => {
     try {
@@ -27,25 +27,25 @@ const calculateSolarPotential = async (req, res) => {
         const monthlyEnergyOutput = dailyEnergyOutput * 30
 
         // Find the user and save the solar calculation
-        const user=await User.findById(req.user)
-        if(!user){
-            return res.status(400).json({error:'User not found'})
-        }
+        // const user=await User.findById(req.user)
+        // if(!user){
+        //     return res.status(400).json({error:'User not found'})
+        // }
 
-        // save in db
-        user.solarHistory.push({
-            state,
-            country,
-            rooftop_area,
-            panel_type,
-            daily_solar_output_kWh: dailyEnergyOutput.toFixed(2),
-            monthly_solar_output_kWh: monthlyEnergyOutput.toFixed(2),
-            date: new Date()
-        })
+        // // save in db
+        // user.solarHistory.push({
+        //     state,
+        //     country,
+        //     rooftop_area,
+        //     panel_type,
+        //     daily_solar_output_kWh: dailyEnergyOutput.toFixed(2),
+        //     monthly_solar_output_kWh: monthlyEnergyOutput.toFixed(2),
+        //     date: new Date()
+        // })
         
-        // Green points awarded : assuming that they are actually planning to keep the solar panels
-        user.green_points += Math.round(monthlyEnergyOutput / 10); 
-        await user.save();
+        // // Green points awarded : assuming that they are actually planning to keep the solar panels
+        // user.green_points += Math.round(monthlyEnergyOutput / 10); 
+        // await user.save();
 
         // Log actual calculated values (not `res.json()`)
         console.log(`Solar Potential for ${state}, ${country}:`);
@@ -53,11 +53,20 @@ const calculateSolarPotential = async (req, res) => {
         console.log(`Daily Solar Output: ${dailyEnergyOutput.toFixed(2)} kWh`);
         console.log(`Monthly Solar Output: ${monthlyEnergyOutput.toFixed(2)} kWh`);
 
+        // return res.json({
+        //     state,
+        //     country,
+        //     latitude,
+        //     longitude,
+        //     panel_type,
+        //     panel_capacity,
+        //     panel_efficiency: panel_efficiency.toFixed(2),
+        //     daily_solar_output_kWh: dailyEnergyOutput.toFixed(2),
+        //     monthly_solar_output_kWh: monthlyEnergyOutput.toFixed(2)
+        // })
         return res.json({
             state,
             country,
-            latitude,
-            longitude,
             panel_type,
             panel_capacity,
             panel_efficiency: panel_efficiency.toFixed(2),
@@ -66,6 +75,7 @@ const calculateSolarPotential = async (req, res) => {
         })
 
     } catch (error) {
+        console.log('from solar:',error)
         return res.status(500).json({ error: error.message })
     }
 }

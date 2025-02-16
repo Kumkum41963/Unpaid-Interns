@@ -16,13 +16,31 @@ export default function ElectricityResultScreen() {
 
     return (
         <View style={styles.container}>
-            <ResultCard title="Electricity Usage Result" data={[
-                { label: "Method", value: data?.method || "N/A" },
-                { label: "Monthly Usage", value: `${data?.calculatedMonthlyUsage_kwh || data?.estimatedMonthlyUsage_kwh || 0} kWh` }
-            ]} />
-            <Button title="Back to Calculator" onPress={() => navigation.goBack()} />
+            {/* Heading */}
+            <View style={styles.headerContainer}>
+                <ResultCard
+                    title="Electricity Usage Result"
+                    data={[
+                        { label: "Method", value: data?.method || "N/A" },
+                        { label: "Monthly Usage", value: `${data?.calculatedMonthlyUsage_kwh || data?.estimatedMonthlyUsage_kwh || 0} kWh` }
+                    ]}
+                />
+            </View>
+
+            {/* Back Button */}
+            <Button title="Back to Calculator" onPress={() => navigation.goBack()} color="#388e3c" />
         </View>
     );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1, padding: 20 } });
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: 20,
+        paddingTop: 40, // Ensures content starts at the top
+        backgroundColor: "#121212", // Dark mode background
+    },
+    headerContainer: {
+        marginBottom: 20,
+    },
+});

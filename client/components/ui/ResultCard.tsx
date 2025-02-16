@@ -19,7 +19,21 @@ export default function ResultCard({ title, data }: ResultProps) {
 }
 
 const styles = StyleSheet.create({
-  card: { padding: 20, borderRadius: 8, backgroundColor: "#fff", elevation: 2, marginBottom: 10 },
-  title: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
-  text: { fontSize: 16 },
+  card: {
+    padding: 20,
+    borderRadius: 8,
+    backgroundColor: "#1e1e1e", // Dark background for the card
+    elevation: 2,
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#a0e080", // Green title for eco-friendly contrast
+  },
+  text: {
+    fontSize: 16,
+    color: "#ffffff", // White text for readability
+  },
 });
