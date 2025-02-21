@@ -5,7 +5,15 @@ import axios from "axios";
 
 const ImageUploadScreen: React.FC = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<string | null>(null);
+  const [responseData, setResponseData] = useState<{
+    productName: string;
+    wasteInfo: {
+      disposalOptions: string;
+      materialType: string;
+      properDisposal: string;
+      recyclingInstructions: string;
+    };
+  } | null>(null);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -22,7 +30,7 @@ const ImageUploadScreen: React.FC = () => {
 
     if (!result.canceled && result.assets.length > 0) {
       setImageUri(result.assets[0].uri);
-      setSuggestions(null); // Reset suggestions when new image is selected
+      setResponseData(null);
     }
   };
 
@@ -40,10 +48,8 @@ const ImageUploadScreen: React.FC = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("API Response:", response.data); // Debugging: Check what API returns
-
-      if (response.data.suggestions) {
-        setSuggestions(response.data.suggestions);
+      if (response.data && response.data.productName && response.data.wasteInfo) {
+        setResponseData(response.data);
       } else {
         Alert.alert("No suggestions found");
       }
@@ -69,10 +75,28 @@ const ImageUploadScreen: React.FC = () => {
         </TouchableOpacity>
       )}
 
-      {suggestions && (
+      {responseData && (
         <View style={styles.suggestionsContainer}>
-          <Text style={styles.suggestionsTitle}>Suggestions:</Text>
-          <Text style={styles.suggestionsText}>{suggestions}</Text>
+          <Text style={styles.suggestionsTitle}>Analysis Result:</Text>
+          <Text style={styles.suggestionsText}>
+            <Text style={styles.boldText}>Product Name:</Text> {responseData.productName}
+          </Text>
+          <Text style={styles.suggestionsText}>
+            <Text style={styles.boldText}>Material Type:</Text> {responseData.wasteInfo.materialType}
+          </Text>
+          <Text style={styles.suggestionsText}>
+            <Text style={styles.boldText}>Disposal Options:</Text> {responseData.wasteInfo.disposalOptions}
+          </Text>
+          <Text style={styles.suggestionsText}>
+            <Text style={styles.boldText}>Proper Disposal:</Text> {responseData.wasteInfo.properDisposal}
+          </Text>
+          <Text style={styles.suggestionsText}>
+            <Text style={styles.boldText}>Recycling Instructions:</Text> {responseData.wasteInfo.recyclingInstructions}
+          </Text>
+
+        <TouchableOpacity style={styles.button} onPress={uploadImage}>
+          <Text style={styles.buttonText}>Sell</Text>
+        </TouchableOpacity>
         </View>
       )}
     </ScrollView>
@@ -85,9 +109,10 @@ const styles = StyleSheet.create({
   button: { backgroundColor: "#1B5E20", paddingVertical: 14, paddingHorizontal: 20, borderRadius: 8, alignItems: "center", width: "90%", marginBottom: 15 },
   buttonText: { color: "white", fontSize: 16, fontWeight: "bold" },
   image: { width: 250, height: 250, marginVertical: 15, borderRadius: 10, borderWidth: 1, borderColor: "#CCC" },
-  suggestionsContainer: { marginTop: 20, padding: 10, backgroundColor: "#E3F2FD", borderRadius: 8, width: "90%" },
-  suggestionsTitle: { fontSize: 18, fontWeight: "bold", color: "#1B5E20", marginBottom: 5 },
-  suggestionsText: { fontSize: 16, color: "#333" },
+  suggestionsContainer: { marginTop: 20, padding: 15, backgroundColor: "#E3F2FD", borderRadius: 8, width: "90%" },
+  suggestionsTitle: { fontSize: 18, fontWeight: "bold", color: "#1B5E20", marginBottom: 10 },
+  suggestionsText: { fontSize: 16, color: "#333", marginBottom: 5 },
+  boldText: { fontWeight: "bold" },
 });
 
 export default ImageUploadScreen;

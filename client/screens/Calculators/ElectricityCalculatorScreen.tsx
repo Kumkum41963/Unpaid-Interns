@@ -6,6 +6,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { ElectricityStackParamList } from "@/navigation/types";
 import { calculateElectricity } from "@/api/electricityApi";
 import { MaterialIcons } from "@expo/vector-icons"; // For delete button (❌)
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define navigation type
 type NavigationProps = StackNavigationProp<ElectricityStackParamList, "ElectricityCalculator">;
@@ -48,44 +49,53 @@ export default function ElectricityCalculatorScreen() {
 
     const handleCalculate = async () => {
         try {
-            setLoading(true);
-            let requestData: any = { method };
-
-            if (method === "bill") {
-                if (!billAmount) {
-                    Alert.alert("Error", "Please enter the bill amount.");
-                    setLoading(false);
-                    return;
-                }
-                requestData = {
-                    method: "bill",
-                    billAmount: Number(billAmount) || 0,
-                    state: state || "Unknown",
-                    unitPrice: unitPrice ? Number(unitPrice) : 0,
-                };
-            } else if (method === "appliance") {
-                if (appliances.length === 0) {
-                    Alert.alert("Error", "Please add at least one appliance.");
-                    setLoading(false);
-                    return;
-                }
-                requestData = { method: "appliance", appliances };
+          setLoading(true);
+          // const email = await AsyncStorage.getItem("userEmail"); // Get email from AsyncStorage
+          const email = "a"; // Get email from AsyncStorage
+          if (!email) {
+            Alert.alert("Error", "User email not found. Please log in again.");
+            setLoading(false);
+            return;
+          }
+      
+          let requestData: any = { method, email }; // Include email in the request data
+      
+          if (method === "bill") {
+            if (!billAmount) {
+              Alert.alert("Error", "Please enter the bill amount.");
+              setLoading(false);
+              return;
             }
-
-            const result = await calculateElectricity(requestData);
-            setLoading(false);
-            navigation.navigate("ElectricityResult", { result: JSON.stringify(result) });
-
-            // Clear inputs after submission
-            setBillAmount("");
-            setState("");
-            setUnitPrice("");
-            setAppliances([]);
+            requestData = {
+              ...requestData,
+              billAmount: Number(billAmount) || 0,
+              state: state || "Unknown",
+              unitPrice: unitPrice ? Number(unitPrice) : 0,
+            };
+          } else if (method === "appliance") {
+            if (appliances.length === 0) {
+              Alert.alert("Error", "Please add at least one appliance.");
+              setLoading(false);
+              return;
+            }
+            requestData = { ...requestData, appliances };
+          }
+      
+          console.log("Request Data:", requestData); // Log the request data
+          const result = await calculateElectricity(requestData);
+          setLoading(false);
+          navigation.navigate("ElectricityResult", { result: JSON.stringify(result) });
+      
+          // Clear inputs after submission
+          setBillAmount("");
+          setState("");
+          setUnitPrice("");
+          setAppliances([]);
         } catch (error) {
-            setLoading(false);
-            Alert.alert("Error", "Something went wrong!");
+          setLoading(false);
+          Alert.alert("Error", "Something went wrong!");
         }
-    };
+      };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>

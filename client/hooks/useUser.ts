@@ -5,26 +5,22 @@ export const useUserDetails = () => {
   const [user, setUser] = useState<{ green_points: number } | null>(null);
 
   const fetchUserDetails = async () => {
-    const token = await AsyncStorage.getItem("token");
-    if (!token) return;
-
     const email = await AsyncStorage.getItem("userEmail");
     if (!email) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${email}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
+      const response = await fetch(`http://192.168.29.55:3000/api/user/${email}`);
       if (response.ok) {
         const data = await response.json();
         setUser(data);
       }
-    } catch {}
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
   };
 
   useEffect(() => {
-    fetchUserDetails();
+    // fetchUserDetails();
   }, []);
 
   return user;

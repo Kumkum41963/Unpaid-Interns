@@ -34,18 +34,11 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/vendor/register", {
+      const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...form,
-          address: {
-            street: form.street,
-            city: form.city,
-            state: form.state,
-            country: form.country,
-            zip: form.zip,
-          },
+          ...form
         }),
       });
 
@@ -96,65 +89,6 @@ const SignUp: React.FC = () => {
           value={form.password}
           onChangeText={(text) => handleChange("password", text)}
           secureTextEntry
-          placeholderTextColor="#A0A0A0"
-        />
-      </View>
-
-      {/* Address Fields */}
-      <Text style={styles.sectionTitle}>Address</Text>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Street</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your street address"
-          value={form.street}
-          onChangeText={(text) => handleChange("street", text)}
-          placeholderTextColor="#A0A0A0"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>City</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your city"
-          value={form.city}
-          onChangeText={(text) => handleChange("city", text)}
-          placeholderTextColor="#A0A0A0"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>State</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your state"
-          value={form.state}
-          onChangeText={(text) => handleChange("state", text)}
-          placeholderTextColor="#A0A0A0"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Country</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your country"
-          value={form.country}
-          onChangeText={(text) => handleChange("country", text)}
-          placeholderTextColor="#A0A0A0"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Zip Code</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your zip code"
-          value={form.zip}
-          onChangeText={(text) => handleChange("zip", text)}
-          keyboardType="numeric"
           placeholderTextColor="#A0A0A0"
         />
       </View>

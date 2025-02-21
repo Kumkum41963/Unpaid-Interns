@@ -34,6 +34,7 @@ const Login: React.FC = () => {
       navigation.replace("ProfileScreen");
     } catch (error: any) {
       Alert.alert("Error", error.message || "Failed to log in");
+      console.log(error)
     }
   };
 

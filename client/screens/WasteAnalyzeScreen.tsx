@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Button, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import axios from "axios";
 
@@ -33,6 +33,7 @@ const ImageUploadScreen: React.FC = () => {
                 },
             });
             setResponseData(res.data);
+            console.log(responseData)
         } catch (error: any) {
             console.error("Error uploading image:", error.response?.data || error.message);
         }

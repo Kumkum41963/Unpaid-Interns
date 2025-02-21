@@ -5,36 +5,40 @@ import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { RootStackParamList } from "@/navigation/types"; // Import navigation types
+import { RootStackParamList } from "@/navigation/types";
 
 const screenWidth = Dimensions.get("window").width;
 
 export default function ProfileScreen() {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>(); // Fix TypeScript error for navigation
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = await AsyncStorage.getItem("authToken");
-        if (!token) {
-          Alert.alert("Session Expired", "Please log in again.");
-          navigation.navigate("Login"); // Navigate to login when session expired
+        const email = await AsyncStorage.getItem("userEmail");
+        if (!email) {
+          setLoading(false);
+          navigation.navigate("Login");
           return;
         }
-        const response = await axios.get("https://backend-amber-nine-53.vercel.app/api/api/user/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUserData(response.data);
+  
+        const response = await axios.get(`https://backend-amber-nine-53.vercel.app/api/user/${email}`);
+        if (response.status === 200) {
+          setUserData(response.data);
+        } else {
+          throw new Error("Failed to fetch user data");
+        }
       } catch (error) {
         console.error("Error fetching profile:", error);
-        Alert.alert("Error", "Failed to load profile");
+        Alert.alert("Error", "Failed to load profile. Please check your connection.");
+        navigation.navigate("Login");
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProfile();
   }, [navigation]);
 
@@ -46,19 +50,22 @@ export default function ProfileScreen() {
     );
   }
 
+  if (!userData) {
+    return null;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.profileCard}>
         <Image
-          source={{ uri: userData?.user?.avatar || "https://via.placeholder.com/100" }}
+          source={{ uri: userData?.avatar || "https://via.placeholder.com/100" }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>{userData?.user?.name}</Text>
-        <Text style={styles.email}>{userData?.user?.email}</Text>
-        <Text style={styles.greenPoints}>Green Points: {userData?.user?.green_points}</Text>
+        <Text style={styles.name}>{userData?.name}</Text>
+        <Text style={styles.email}>{userData?.email}</Text>
+        <Text style={styles.greenPoints}>Green Points: {userData?.green_points}</Text>
       </View>
 
-      {/* Solar History Chart */}
       <Text style={styles.sectionTitle}>Solar Energy Output (Last 2 Entries)</Text>
       <LineChart
         data={{
@@ -72,7 +79,6 @@ export default function ProfileScreen() {
         style={styles.chart}
       />
 
-      {/* Electricity Usage Chart */}
       <Text style={styles.sectionTitle}>Electricity Usage (Last 2 Entries)</Text>
       <LineChart
         data={{

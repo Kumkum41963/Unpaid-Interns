@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SolarStackParamList } from "@/navigation/types";
 import { calculateSolarEnergy } from "@/api/solarApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define navigation type
 type NavigationProps = StackNavigationProp<SolarStackParamList, "SolarCalculator">;
@@ -19,34 +20,56 @@ export default function SolarCalculatorScreen() {
     const [panelType, setPanelType] = useState("monocrystalline"); // Default selection
     const [loading, setLoading] = useState(false);
 
-    // Function to handle calculation
     const handleCalculate = async () => {
         if (!state || !country || !rooftopArea || !panelType) {
-            Alert.alert("Error", "Please fill in all fields.");
-            return;
+          Alert.alert("Error", "Please fill in all fields.");
+          return;
         }
-
+      
         try {
-            setLoading(true);
-            const result = await calculateSolarEnergy({
-                state,
-                country,
-                rooftop_area: Number(rooftopArea),
-                panel_type: panelType,
-            });
+          setLoading(true);
+      
+          // Get the user's email from AsyncStorage
+          const email = await AsyncStorage.getItem("userEmail");
+          if (!email) {
+            Alert.alert("Error", "User email not found. Please log in again.");
             setLoading(false);
-            navigation.navigate("SolarResult", { result: JSON.stringify(result) });
-
-            // ✅ Clear inputs after submission
-            setState("");
-            setCountry("");
-            setRooftopArea("");
-            setPanelType("Monocrystalline");
+            return;
+          }
+      
+          // Convert panelType to the correct case
+          const formattedPanelType = panelType.charAt(0).toUpperCase() + panelType.slice(1).toLowerCase();
+      
+          // Ensure panelType is one of the allowed values
+          const allowedPanelTypes = ["Monocrystalline", "Polycrystalline", "Thin-Film"];
+          if (!allowedPanelTypes.includes(formattedPanelType)) {
+            Alert.alert("Error", "Invalid panel type. Please choose from Monocrystalline, Polycrystalline, or Thin-Film.");
+            setLoading(false);
+            return;
+          }
+      
+          // Send the request with email
+          const result = await calculateSolarEnergy({
+            state,
+            country,
+            rooftop_area: Number(rooftopArea),
+            panel_type: formattedPanelType, // Use the correctly formatted panel type
+            email,
+          });
+      
+          setLoading(false);
+          navigation.navigate("SolarResult", { result: JSON.stringify(result) });
+      
+          // Clear inputs after submission
+          setState("");
+          setCountry("");
+          setRooftopArea("");
+          setPanelType("Monocrystalline"); // Reset to default value
         } catch (error) {
-            setLoading(false);
-            Alert.alert("Error", "Something went wrong!");
+          setLoading(false);
+          Alert.alert("Error", "Something went wrong!");
         }
-    };
+      };
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
