@@ -1,7 +1,7 @@
 # UrjaSetu
 
 ## Download the App
-[Click here to download UrjaSetu](https://expo.dev/accounts/himanshuuuuuuuuuuu/projects/client/builds/92aeeeb4-84ca-46a6-99dc-6c5361981ef4)
+[Click here to download UrjaSetu]((https://expo.dev/accounts/himanshuuuuuuuuuuu/projects/client/builds/18d9e8b8-7ec4-453c-848b-b328ed0bc143))
 
 ## Project Presentation
 [View the Canva PPT](https://www.canva.com/design/DAGfFlfMGo4/in1TdLiC2PhhS6FcUzISzw/edit)
