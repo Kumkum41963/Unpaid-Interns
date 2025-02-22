@@ -8,6 +8,7 @@ export type RootStackParamList = {
     SignUp: undefined;
     About: undefined;
     ImageUploadScreen: undefined; // ✅ Added for floating button navigation
+    Map: undefined;
 };
 
 // ✅ Bottom Tab Navigator (Tab Navigation)

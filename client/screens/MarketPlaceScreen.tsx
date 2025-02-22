@@ -1,6 +1,6 @@
 import Product from "@/components/ui/Product";
 import { useUserDetails } from "@/hooks/useUser";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -14,29 +14,33 @@ const Marketplace: React.FC = () => {
   const user = useUserDetails();
   const [greenPoints, setGreenPoints] = useState(user?.green_points ?? 0);
 
-  const handleBuy = async (id: string, price: number) => {
-    const token = await AsyncStorage.getItem("token");
-    const email = await AsyncStorage.getItem("userEmail");
+  useEffect(() => {
+    if (user) {
+      setGreenPoints(user.green_points);
+    }
+  }, [user]);
 
-    if (!token || !email) {
+  const handleBuy = async (id: string, price: number) => {
+    if (greenPoints < price) {
+      Alert.alert(
+        "Insufficient Green Points",
+        "You don't have enough green points yet! Apply more sustainable practices to earn more green points."
+      );
+      return;
+    }
+    const email = await AsyncStorage.getItem("userEmail");
+    if (!email) {
       Alert.alert("Error", "User not authenticated");
       return;
     }
-
     try {
       const response = await fetch("https://backend-amber-nine-53.vercel.app/api/user/deduct", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, price }),
       });
-
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.message || "Purchase failed");
-
       setGreenPoints(data.green_points);
       Alert.alert("Success", `You bought ${id} for ${price} Green Points`);
     } catch (error: any) {
@@ -46,12 +50,9 @@ const Marketplace: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Heading */}
       <Text style={styles.heading}>Eco Marketplace</Text>
       <Text style={styles.description}>Use your Green Points to shop for sustainable products.</Text>
-
       <Text style={styles.points}>Green Points: {greenPoints}</Text>
-
       <FlatList
         data={staticProducts}
         keyExtractor={(item) => item.id}
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 40, // Ensures content starts at the top
-    backgroundColor: "#121212", // Dark theme
+    paddingTop: 40,
+    backgroundColor: "#121212",
   },
   heading: {
-    fontSize: 30, // Bigger heading for emphasis
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#a0e080", // Green for eco-friendly look
+    color: "#a0e080",
     textAlign: "center",
     marginBottom: 8,
   },

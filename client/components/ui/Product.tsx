@@ -23,9 +23,9 @@ const Product: React.FC<ProductProps> = ({ item, onBuy }) => {
 
 const styles = StyleSheet.create({
   productCard: {
-    padding: 15,
     backgroundColor: "#1e1e1e",
     borderRadius: 10,
+    padding: 15,
     marginBottom: 15,
     borderWidth: 1,
     borderColor: "#2e7d32",
@@ -36,27 +36,27 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   productDetails: {
-    padding: 10,
+    paddingVertical: 10,
   },
   productName: {
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 10,
     color: "#ffffff",
+    marginBottom: 5,
   },
   price: {
     fontSize: 14,
     color: "#a0e080",
-    marginVertical: 8,
+    marginBottom: 10,
   },
   buyButton: {
-    backgroundColor: "#388e3c",
+    backgroundColor: "#4CAF50",
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 8,
     alignItems: "center",
   },
   buyText: {
-    color: "white",
+    color: "#ffffff",
     fontSize: 14,
     fontWeight: "bold",
   },
